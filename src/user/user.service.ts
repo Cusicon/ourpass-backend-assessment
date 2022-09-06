@@ -35,4 +35,8 @@ export class UserService {
       } else throw new InternalServerErrorException();
     }
   }
+
+  async getAllUsers() {
+    return await this.userModel.find({}, { password: 0, salt: 0 });
+  }
 }
