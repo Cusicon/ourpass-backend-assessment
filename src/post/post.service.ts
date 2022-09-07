@@ -34,10 +34,7 @@ export class PostService {
   }
 
   async getAllPosts(user: UserDocument): Promise<any> {
-    const posts = await this.postModel.find(
-      { author: user._id },
-      { author: 0 },
-    );
+    const posts = await this.postModel.find({ author: user._id });
     return posts;
   }
 
