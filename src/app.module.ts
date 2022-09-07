@@ -1,11 +1,9 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { config } from 'dotenv';
+import { ENV } from 'src/env.config';
 import { UserModule } from './user/user.module';
 
-config();
-
-const { MONGODB_LOCAL_URI } = process.env;
+const { MONGODB_LOCAL_URI } = ENV;
 
 @Module({
   imports: [
