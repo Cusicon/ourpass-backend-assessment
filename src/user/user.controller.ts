@@ -4,11 +4,11 @@ import { UtilityHelper } from '../helpers/utility.helper';
 import { UserService } from './user.service';
 
 @Controller('api/v1/users')
+@UseGuards(AuthGuard())
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get()
-  @UseGuards(AuthGuard())
   async getAllUsers() {
     const allUsers = await this.userService.getAllUsers();
     return UtilityHelper.response('all users', allUsers);

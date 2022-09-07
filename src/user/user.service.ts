@@ -27,13 +27,13 @@ export class UserService {
 
       const userObj = { ...createUserDto, salt, password: hashedPassword };
 
-      const user = new this.userModel(userObj);
-      await user.save();
+      const newUser = new this.userModel(userObj);
+      await newUser.save();
 
-      user.password = undefined;
-      user.salt = undefined;
+      newUser.password = undefined;
+      newUser.salt = undefined;
 
-      return user;
+      return newUser;
     } catch (error) {
       if (error.code === 11000) {
         throw new ConflictException('Sorry, user already exist.');
@@ -47,7 +47,7 @@ export class UserService {
     const user = await this.authenticateUser(authCredentialsDto);
     const payload: JwtPayload = { user_uuid: user._id, email: user.email };
 
-    const accessToken = await this.jwtService.sign(payload);
+    const accessToken = this.jwtService.sign(payload);
 
     return { accessToken, user };
   }
