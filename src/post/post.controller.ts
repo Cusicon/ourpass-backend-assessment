@@ -1,9 +1,9 @@
-import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Patch, Post, Req, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { UtilityHelper } from 'src/helpers/utility.helper';
 import { UserDocument } from 'src/user/schemas/user.schema';
 import { CurrentUser } from 'src/user/user.decorator';
-import { CreatePostDto } from './dto/create-post.dto';
+import { PostCredentialsDto } from './dto/post-credentials.dto';
 import { PostService } from './post.service';
 
 @Controller('api/v1/posts')
@@ -13,10 +13,10 @@ export class PostController {
 
   @Post('new')
   async createPost(
-    @Body() createPostDto: CreatePostDto,
+    @Body() postCredentialsDto: PostCredentialsDto,
     @CurrentUser() user: UserDocument,
   ) {
-    const post = await this.postService.createPost(createPostDto, user);
+    const post = await this.postService.createPost(postCredentialsDto, user);
     return UtilityHelper.response('new post created', post);
   }
 }

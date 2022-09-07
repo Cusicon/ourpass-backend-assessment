@@ -1,11 +1,8 @@
 import { IsNotEmpty } from 'class-validator';
 
-export class CreatePostDto {
+export class PostCredentialsDto {
   @IsNotEmpty()
   title: string;
-
-  @IsNotEmpty()
-  slug: string;
 
   @IsNotEmpty()
   description: string;
