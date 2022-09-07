@@ -1,4 +1,5 @@
 import { Body, Controller, Post, ValidationPipe } from '@nestjs/common';
+import { UtilityHelper } from 'src/helpers/utility.helper';
 import { AuthCredentialsDto } from './dto/auth-credentials.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserService } from './user.service';
@@ -10,11 +11,12 @@ export class AuthController {
   @Post('signup')
   async signUp(@Body(ValidationPipe) createUserDto: CreateUserDto) {
     const newUser = await this.userService.signUp(createUserDto);
-    return newUser;
+    return UtilityHelper.response('account created successfully', newUser);
   }
 
   @Post('signin')
   async signIn(@Body(ValidationPipe) authCredentialsDto: AuthCredentialsDto) {
-    return await this.userService.signIn(authCredentialsDto);
+    const signinedIn = await this.userService.signIn(authCredentialsDto);
+    return UtilityHelper.response('login successful', signinedIn);
   }
 }

@@ -1,7 +1,6 @@
 import { Controller, Get, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { UserDocument } from './schemas/user.schema';
-import { GetUser } from './user.decorator';
+import { UtilityHelper } from '../helpers/utility.helper';
 import { UserService } from './user.service';
 
 @Controller('api/v1/users')
@@ -10,7 +9,8 @@ export class UserController {
 
   @Get()
   @UseGuards(AuthGuard())
-  async getAllUsers(@GetUser() user: UserDocument) {
-    return this.userService.getAllUsers();
+  async getAllUsers() {
+    const allUsers = await this.userService.getAllUsers();
+    return UtilityHelper.response('all users', allUsers);
   }
 }
