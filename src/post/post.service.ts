@@ -30,7 +30,20 @@ export class PostService {
   }
 
   async getAllPosts(user): Promise<any> {
-    const posts = await this.postModel.find({ author: user._id });
+    const posts = await this.postModel.find(
+      { author: user._id },
+      { author: 0 },
+    );
     return posts;
+  }
+
+  async updateSinglePost(postId, postUpdates, user): Promise<any> {
+    const post = await this.postModel.findOneAndUpdate(
+      { _id: postId, author: user._id },
+      { ...postUpdates },
+      { new: true },
+    );
+
+    return post;
   }
 }
