@@ -1,4 +1,4 @@
-import { Body, Controller, Patch, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { UtilityHelper } from 'src/helpers/utility.helper';
 import { UserDocument } from 'src/user/schemas/user.schema';
@@ -18,5 +18,11 @@ export class PostController {
   ) {
     const post = await this.postService.createPost(postCredentialsDto, user);
     return UtilityHelper.response('new post created', post);
+  }
+
+  @Get()
+  async getAllPosts(@CurrentUser() user: UserDocument) {
+    const posts = await this.postService.getAllPosts(user);
+    return UtilityHelper.response(`all posts for ${user.name}`, posts);
   }
 }

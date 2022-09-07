@@ -28,4 +28,9 @@ export class PostService {
 
     return newPost;
   }
+
+  async getAllPosts(user): Promise<any> {
+    const posts = await this.postModel.find({ author: user._id });
+    return posts;
+  }
 }
