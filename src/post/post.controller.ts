@@ -6,7 +6,6 @@ import {
   Param,
   Patch,
   Post,
-  Query,
   UseGuards,
   ValidationPipe,
 } from '@nestjs/common';
@@ -52,11 +51,7 @@ export class PostController {
   }
 
   @Delete(':id')
-  async deletePost(
-    @Param('id') id: string,
-    @CurrentUser() user: UserDocument,
-    @Query('sure') sure: boolean,
-  ) {
+  async deletePost(@Param('id') id: string, @CurrentUser() user: UserDocument) {
     await this.postService.deletePost(id, user);
     return UtilityHelper.response('post deleted successfully', null);
   }

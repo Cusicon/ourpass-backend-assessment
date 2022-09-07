@@ -3,6 +3,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ENV } from 'src/env.config';
 import { UserModule } from './user/user.module';
 import { PostModule } from './post/post.module';
+import { CategoryModule } from './category/category.module';
 
 const { MONGODB_URI } = ENV;
 
@@ -15,6 +16,7 @@ const { MONGODB_URI } = ENV;
     }),
     UserModule,
     PostModule,
+    CategoryModule,
   ],
 })
 export class AppModule {}
