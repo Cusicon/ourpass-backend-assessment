@@ -1,6 +1,10 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, UpdateQuery } from 'mongoose';
+import { Model } from 'mongoose';
 import { UserDocument } from 'src/user/schemas/user.schema';
 import { PostCredentialsDto } from './dto/post-credentials.dto';
 import { Post, PostDocument } from './schemas/post.schema';
@@ -51,13 +55,7 @@ export class PostService {
     return post;
   }
 
-  async deletePost(
-    postId: string,
-    user: UserDocument,
-    iamSure: boolean,
-  ): Promise<void> {
-    if (!iamSure) return;
-
+  async deletePost(postId: string, user: UserDocument): Promise<void> {
     const deleted = await this.postModel.deleteOne({
       _id: postId,
       author: user._id,

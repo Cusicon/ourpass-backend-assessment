@@ -57,7 +57,7 @@ export class PostController {
     @CurrentUser() user: UserDocument,
     @Query('sure') sure: boolean,
   ) {
-    await this.postService.deletePost(id, user, sure);
+    await this.postService.deletePost(id, user);
     return UtilityHelper.response('post deleted successfully', null);
   }
 }
