@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, UpdateQuery } from 'mongoose';
 import { UserDocument } from 'src/user/schemas/user.schema';
 import { PostCredentialsDto } from './dto/post-credentials.dto';
 import { Post, PostDocument } from './schemas/post.schema';
@@ -29,7 +29,7 @@ export class PostService {
     return newPost;
   }
 
-  async getAllPosts(user): Promise<any> {
+  async getAllPosts(user: UserDocument): Promise<any> {
     const posts = await this.postModel.find(
       { author: user._id },
       { author: 0 },
@@ -37,7 +37,11 @@ export class PostService {
     return posts;
   }
 
-  async updateSinglePost(postId, postUpdates, user): Promise<any> {
+  async updateSinglePost(
+    postId: string,
+    postUpdates: PostCredentialsDto,
+    user: UserDocument,
+  ): Promise<any> {
     const post = await this.postModel.findOneAndUpdate(
       { _id: postId, author: user._id },
       { ...postUpdates },
@@ -45,5 +49,21 @@ export class PostService {
     );
 
     return post;
+  }
+
+  async deletePost(
+    postId: string,
+    user: UserDocument,
+    iamSure: boolean,
+  ): Promise<void> {
+    if (!iamSure) return;
+
+    const deleted = await this.postModel.deleteOne({
+      _id: postId,
+      author: user._id,
+    });
+
+    if (deleted.deletedCount < 1)
+      throw new NotFoundException(`Post with ID: '${postId}' wasn't deleted`);
   }
 }

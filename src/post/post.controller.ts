@@ -1,10 +1,12 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
   Post,
+  Query,
   UseGuards,
   ValidationPipe,
 } from '@nestjs/common';
@@ -35,7 +37,7 @@ export class PostController {
     return UtilityHelper.response(`all posts for ${user.name}`, posts);
   }
 
-  @Patch(':id/update')
+  @Patch(':id')
   async updateSinglePost(
     @Body(ValidationPipe) postCredentialsDto: PostCredentialsDto,
     @CurrentUser() user: UserDocument,
@@ -46,6 +48,16 @@ export class PostController {
       postCredentialsDto,
       user,
     );
-    return UtilityHelper.response(`all posts for ${user.name}`, updatedPost);
+    return UtilityHelper.response(`post updated successfully`, updatedPost);
+  }
+
+  @Delete(':id')
+  async deletePost(
+    @Param('id') id: string,
+    @CurrentUser() user: UserDocument,
+    @Query('sure') sure: boolean,
+  ) {
+    await this.postService.deletePost(id, user, sure);
+    return UtilityHelper.response('post deleted successfully', null);
   }
 }
