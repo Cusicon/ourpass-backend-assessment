@@ -9,8 +9,8 @@ export class UsersSeeder implements Seeder {
   ) {}
 
   async seed(): Promise<any> {
-    // Generate just 10 users.
-    const users = DataFactory.createForClass(User).generate(10);
+    // Generate just 5 users.
+    const users = DataFactory.createForClass(User).generate(5);
 
     // Insert into database.
     return this.userModel.insertMany(users);
