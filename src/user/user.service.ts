@@ -56,6 +56,16 @@ export class UserService {
     return await this.userModel.find({}, { password: 0, salt: 0 });
   }
 
+  async updateUserInfo(fullname: string, user: UserDocument) {
+    const updatedUser = await this.userModel.findOneAndUpdate(
+      { _id: user._id },
+      { name: fullname },
+      { new: true },
+    );
+
+    return updatedUser;
+  }
+
   async authenticateUser(
     authCredentialsDto: AuthCredentialsDto,
   ): Promise<UserDocument> {
