@@ -19,17 +19,17 @@ export class PostsSeeder implements Seeder {
       const user = users[i];
 
       // Generate just 3 posts
-      // ...and assign authors them.
+      // ...and assign an author to them.
       let posts = DataFactory.createForClass(Post).generate(3);
 
       // Each author has 3 post each
-      let modifiedPost = posts.map((p) => {
+      let modifiedPosts = posts.map((p) => {
         p.author = user._id;
         return p;
       });
 
       // Push to array
-      returningPosts.push(...modifiedPost);
+      returningPosts.push(...modifiedPosts);
     }
 
     // Insert into database.

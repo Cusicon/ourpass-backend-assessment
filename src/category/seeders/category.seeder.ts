@@ -1,28 +1,40 @@
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { DataFactory, Seeder } from 'nestjs-seeder';
-import { User, UserDocument } from 'src/user/schemas/user.schema';
+import { Post, PostDocument } from 'src/post/schemas/post.schema';
 import { Category, CategoryDocument } from '../schemas/category.schema';
 
 export class CategoriesSeeder implements Seeder {
   constructor(
-    @InjectModel(Category.name) private readonly categoryModel: Model<CategoryDocument>,
-    @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
+    @InjectModel(Category.name)
+    private readonly categoryModel: Model<CategoryDocument>,
+    @InjectModel(Post.name) private readonly postModel: Model<PostDocument>,
   ) {}
 
   async seed(): Promise<any> {
-    // Generate just 10 categories.
-    const categories = DataFactory.createForClass(Category).generate(5);
+    const posts = await this.postModel.find();
+    let returningCategories = [];
 
-    // Randomly pick one user from database
-    const users = await this.userModel.find();
-    const user = users[Math.floor(Math.random() * users.length)];
+    // Assign 3 post per user
+    for (let i = 0; i < posts.length; i++) {
+      const post = posts[i];
 
-    // ...and assign as "author" to all categories, per seed
-    categories.map((p) => (p.author = user._id));
+      // Generate just 2 categories
+      // ...and assign a post to them.
+      let categories = DataFactory.createForClass(Category).generate(2);
+
+      // Each post has 3 categories each
+      let modifiedCatgories = categories.map((cat) => {
+        cat.post = post._id;
+        return cat;
+      });
+
+      // Push to array
+      returningCategories.push(...modifiedCatgories);
+    }
 
     // Insert into database.
-    return this.categoryModel.insertMany(categories);
+    return this.categoryModel.insertMany(returningCategories);
   }
 
   async drop(): Promise<any> {
