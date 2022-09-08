@@ -16,7 +16,7 @@ export class UserController {
     return UtilityHelper.response('all users', allUsers);
   }
 
-  @Patch()
+  @Patch('profile')
   async updateUserInfo(
     @Body('name') fullname: string,
     @CurrentUser() user: UserDocument,
