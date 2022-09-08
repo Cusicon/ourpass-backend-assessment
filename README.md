@@ -1,73 +1,151 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# OurPass Backend Assessment
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+An OurPass backend interview test to create a content management CRUD API.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+<br>
 
-## Description
+## Installation 💻
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Here is the Live [API](https://ourpass-backend-development.herokuapp.com/) hosted at Heroku
 
-## Installation
+Visit the url and be pleased 💪🏾
+<br>
+<br>
 
-```bash
-$ npm install
+## API Endpoints 🔗
+
+I sent invites to <akinwizguy@gmail.com> and <flashup4all@gmail.com>, a copy of the [postman collection](https://go.postman.co/workspace/New-Team-Workspace~390aa048-424b-4138-8e4a-d81e6eafebbf/collection/18382461-ec7d450a-369d-45eb-966e-61c7d2f59703?action=share&creator=18382461) I made all endpoint calls at, please refer to that.
+
+Incase that is not found or not understood, I've also kept this for reference purposes.
+<br>
+Thank you 💯😇
+
+<br>
+
+# Endpoints Documentation 📚
+
+A complete listing of endpoints, parameters and body for an easier consumption of the API.
+<br>
+<br>
+
+<code>
+Authorization Header: Bearer {{Token}}
+</code>
+
+<br>
+<br>
+
+### Auth Module (Bearer Token: None)
+
+- POST: {{base_url}}/api/v1/auth/signup | `SignUp user`
+- POST: {{base_url}}/api/v1/auth/signin | `SignIn user`
+  <br>
+  <br>
+
+### Users Module (Bearer Token: `JWTAccessToken`)
+
+- GET: {{base_url}}/api/v1/users | `Get all users`
+- PATCH: {{base_url}}/api/v1/users/profile | `Edit a user's info`
+
+```json
+Body: {
+	"name": "Mr. Delfina Keeling"
+}
 ```
 
-## Running the app
+<br>
+<br>
 
-```bash
-# development
-$ npm run start
+### Posts Module (Bearer Token: `JWTAccessToken`)
 
-# watch mode
-$ npm run start:dev
+- POST: {{base_url}}/api/v1/posts/new | `Create a new post`
 
-# production mode
-$ npm run start:prod
+```json
+Body: {
+	"title": "Post 1",
+	"description": "This is post one"
+}
 ```
 
-## Test
+- GET: {{base_url}}/api/v1/posts | `Get all posts`
+- PATCH: {{base_url}}/api/v1/posts/:id | `Update a single post`
 
-```bash
-# unit tests
-$ npm run test
+```json
+Param: {
+    "id": "63197ec58e0d078546e01868"
+}
 
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+Body: {
+	"title": "Backend Role at OurPass",
+	"description": "Welcome, the job is going to be fun"
+}
 ```
 
-## Support
+- DELETE: {{base_url}}/api/v1/posts/:id | `Delete a post`
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```json
+Param: {
+    "id": "63197ec58e0d078546e01868"
+}
+```
 
-## Stay in touch
+<br>
+<br>
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### Categories Module (Bearer Token: `JWTAccessToken`)
 
-## License
+- POST: {{base_url}}/api/v1/:postId/categories/new | `Create a new category`
 
-Nest is [MIT licensed](LICENSE).
+```json
+Param: {
+    "postId": "63197ec58e0d078546e0186a"
+}
+Body: {
+	"title": "Category for you",
+	"description": "Welcome to Cat house"
+}
+```
+
+- GET: {{base_url}}/api/v1/:postId/categories | `Get all categories`
+
+```json
+Param: {
+    "postId": "63197ec58e0d078546e0186a"
+}
+```
+
+- PATCH: {{base_url}}/api/v1/:postId/categories/:id | `Update a single category`
+
+```json
+Param: {
+    "postId": "631905e6591a6067e75a9d01",
+    "id": "6319259fcdd29345f9d86725"
+}
+Body: {
+	"title": "Cat 3",
+	"description": "Welcome to Cat 3"
+}
+```
+
+- DELETE: {{base_url}}/api/v1/:postId/categories/:id | `Delete a category`
+
+```json
+Param: {
+    "postId": "631905e6591a6067e75a9d01",
+    "id": "63192375e06b16121940c732"
+}
+```
+
+<br>
+
+## Enjoy 🎉🥳💪🏾
+
+I'm pretty sure you'll love what I did.
+
+<br>
+<br>
+
+## Author 🧑🏾‍💻😁
+
+[Success Chukwu](https://iam.successchukwu.com)<br>
+Email: <iamcusicon@gmai.com>
